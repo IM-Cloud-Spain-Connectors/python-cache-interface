@@ -77,8 +77,8 @@ class Cache(metaclass=ABCMeta):  # pragma: no cover
 Just initialize the class you want and use the public methods:
 
 ```python
-from rndi.cache.contracts.contracts import Cache
-from rndi.cache_interface.adapters.fs import FileSystemCacheAdapter
+from rndi.cache.contracts import Cache
+from rndi.cache.adapters.fs.adapter import FileSystemCacheAdapter
 
 
 def some_process_that_requires_cache(cache: Cache):
