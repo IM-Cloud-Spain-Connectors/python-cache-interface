@@ -1,4 +1,9 @@
-from rndi.cache_interface.adapters.null import NullCacheAdapter
+#
+# This file is part of the Ingram Micro CloudBlue RnD Integration Connectors SDK.
+#
+# Copyright (c) 2023 Ingram Micro. All Rights Reserved.
+#
+from rndi.cache.adapters.null.adapter import NullCacheAdapter
 
 COUNT = 0
 COMPLEX_KEY = 'https://some.url.com/id/8b3a6052-621e-45cc-be5a-316f486c50aa'

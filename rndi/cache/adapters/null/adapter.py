@@ -5,7 +5,7 @@
 #
 from typing import Any, Optional
 
-from rndi.cache_interface.contracts import Cache
+from rndi.cache.contracts import Cache
 
 
 class NullCacheAdapter(Cache):  # pragma: no cover
