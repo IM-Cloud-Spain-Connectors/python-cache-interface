@@ -1,10 +1,15 @@
+#
+# This file is part of the Ingram Micro CloudBlue RnD Integration Connectors SDK.
+#
+# Copyright (c) 2023 Ingram Micro. All Rights Reserved.
+#
 from typing import List
 
 import pytest
 
-from rndi.cache_interface.adapters.fs import FileSystemCacheAdapter
-from rndi.cache_interface.adapters.null import NullCacheAdapter
-from rndi.cache_interface.contracts import Cache
+from rndi.cache.adapters.fs.adapter import FileSystemCacheAdapter
+from rndi.cache.adapters.null.adapter import NullCacheAdapter
+from rndi.cache.contracts import Cache
 
 
 @pytest.fixture
