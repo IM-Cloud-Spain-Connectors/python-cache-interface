@@ -140,3 +140,9 @@ Flush the complete cache.
 cache.flush()
 ```
 
+### Available Adapters
+
+This package provides along with the contract, two small adapters:
+
+* `NullCacheAdapter` that will never cache anything.
+* `FileSystemCacheAdapter` very simple file-based cache.
