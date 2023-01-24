@@ -8,6 +8,10 @@ from typing import Any, Optional
 from rndi.cache.contracts import Cache
 
 
+def provide_none_cache_adapter(_: dict) -> Cache:
+    return NullCacheAdapter()
+
+
 class NullCacheAdapter(Cache):  # pragma: no cover
     def has(self, key: str) -> bool:
         return False
