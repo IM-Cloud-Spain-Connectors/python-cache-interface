@@ -3,21 +3,32 @@
 #
 # Copyright (c) 2023 Ingram Micro. All Rights Reserved.
 #
-from typing import List
-
 import pytest
+from logging import LoggerAdapter
+from typing import List
+from unittest.mock import patch
 
-from rndi.cache.adapters.fs.adapter import FileSystemCacheAdapter
-from rndi.cache.adapters.null.adapter import NullCacheAdapter
 from rndi.cache.contracts import Cache
+from rndi.cache.provider import provide_cache
 
 
 @pytest.fixture
-def adapters():
+def adapters(logger):
     def __adapters() -> List[Cache]:
-        return [
-            FileSystemCacheAdapter('/tmp'),
-            NullCacheAdapter(),
+        setups = [
+            {'CACHE_DRIVER': 'file', 'CACHE_DIR': '/tmp'},
+            {'CACHE_DRIVER': 'none'},
         ]
 
+        return [provide_cache(setup, logger()) for setup in setups]
+
     return __adapters
+
+
+@pytest.fixture()
+def logger():
+    def __logger() -> LoggerAdapter:
+        with patch('logging.LoggerAdapter') as logger:
+            return logger
+
+    return __logger

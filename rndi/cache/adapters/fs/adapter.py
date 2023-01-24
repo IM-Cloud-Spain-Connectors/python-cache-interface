@@ -13,6 +13,13 @@ from rndi.cache.contracts import Cache
 import jsonpickle
 
 
+def provide_fs_cache_adapter(config: dict) -> Cache:
+    return FileSystemCacheAdapter(
+        directory_path=config.get('CACHE_DIR', '/tmp/cache'),
+        ttl=config.get('CACHE_TTL', 900),
+    )
+
+
 def _get_file_contents(file_name: str) -> Any:
     with open(file_name, 'r') as cache:
         return jsonpickle.decode(cache.read())
