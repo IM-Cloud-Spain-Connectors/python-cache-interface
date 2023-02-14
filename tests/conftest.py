@@ -3,11 +3,11 @@
 #
 # Copyright (c) 2023 Ingram Micro. All Rights Reserved.
 #
-import pytest
-from logging import LoggerAdapter
 from typing import List
+from logging import LoggerAdapter
 from unittest.mock import patch
 
+import pytest
 from rndi.cache.contracts import Cache
 from rndi.cache.provider import provide_cache
 

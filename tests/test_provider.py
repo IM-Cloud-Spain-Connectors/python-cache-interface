@@ -6,7 +6,7 @@ from rndi.cache.provider import provide_cache
 
 def test_make_cache_should_make_a_cache_adapter(logger):
     cache = provide_cache({
-        'CACHE_DRIVER': 'file'
+        'CACHE_DRIVER': 'file',
     }, logger())
 
     assert isinstance(cache, Cache)
@@ -15,7 +15,7 @@ def test_make_cache_should_make_a_cache_adapter(logger):
 
 def test_make_cache_should_use_null_cache_on_invalid_cache_configuration(logger):
     cache = provide_cache({
-        'CACHE_DRIVER': 'wrong'
+        'CACHE_DRIVER': 'wrong',
     }, logger())
 
     assert isinstance(cache, Cache)
