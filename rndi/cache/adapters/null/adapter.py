@@ -16,11 +16,11 @@ class NullCacheAdapter(Cache):  # pragma: no cover
     def has(self, key: str) -> bool:
         return False
 
-    def get(self, key: str, default: Any = None) -> Any:
+    def get(self, key: str, default: Any = None, ttl: Optional[int] = None) -> Any:
         value = default() if callable(default) else default
 
         if isinstance(value, tuple):
-            value, ttl = value
+            value, _ = value
 
         return value
 

@@ -3,6 +3,8 @@
 #
 # Copyright (c) 2023 Ingram Micro. All Rights Reserved.
 #
+import time
+
 from rndi.cache.adapters.null.adapter import NullCacheAdapter
 
 COUNT = 0
@@ -71,6 +73,17 @@ def test_adapter_cache_should_flush_all_values(adapters):
         assert not adapter.has('b')
         assert not adapter.has('c')
         assert not adapter.has('d')
+
+
+def test_adapter_cache_get_should_update_expiration_if_provided(adapters):
+    for adapter in adapters():
+        adapter.put('x', 'some-value-1')
+        adapter.get('x', ttl=300)
+
+        if isinstance(adapter, NullCacheAdapter):
+            assert not adapter.has('x')
+        else:
+            assert adapter.get_entry('x').get('expire_at') == round(time.time() + 300)
 
 
 def test_adapter_cache_should_flush_only_expired_values(adapters):
