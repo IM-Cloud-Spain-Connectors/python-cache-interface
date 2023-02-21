@@ -18,7 +18,7 @@ class Cache(metaclass=ABCMeta):  # pragma: no cover
         """
 
     @abstractmethod
-    def get(self, key: str, default: Any = None) -> Any:
+    def get(self, key: str, default: Any = None, ttl: Optional[int] = None) -> Any:
         """
         Get the required value by key from the cache.
         :param key: str The key of the stored value.
@@ -29,6 +29,7 @@ class Cache(metaclass=ABCMeta):  # pragma: no cover
                         seconds. The callable may return a Tuple[Any, int]
                         with the actual value as first element and the desired
                         expired time as second value.
+        :param ttl: int Time to live in seconds.
         :return: Any The requested value by key.
         """
 

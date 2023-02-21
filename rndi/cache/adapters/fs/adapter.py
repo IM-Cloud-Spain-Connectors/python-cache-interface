@@ -20,7 +20,7 @@ def provide_fs_cache_adapter(config: dict) -> Cache:
     )
 
 
-def _get_file_contents(file_name: str) -> Any:
+def get_file_contents(file_name: str) -> Any:
     with open(file_name, 'r') as cache:
         return jsonpickle.decode(cache.read())
 
@@ -44,14 +44,17 @@ class FileSystemCacheAdapter(Cache):
     def has(self, key: str) -> bool:
         return self.get(key) is not None
 
-    def get(self, key: str, default: Any = None) -> Any:
+    def get(self, key: str, default: Any = None, ttl: Optional[int] = None) -> Any:
         cache_file = self._get_file_name(key)
         try:
-            content = _get_file_contents(cache_file)
+            content = get_file_contents(cache_file)
 
-            if time.time() >= content['expire_at']:
+            if round(time.time()) >= content['expire_at']:
                 _delete_file(cache_file)
                 raise FileNotFoundError
+
+            if ttl:
+                self.put(key, content['value'], ttl)
 
             return content['value']
         except FileNotFoundError:
@@ -66,7 +69,7 @@ class FileSystemCacheAdapter(Cache):
     def put(self, key: str, value: Any, ttl: Optional[int] = None) -> Any:
         with open(self._get_file_name(key), 'w') as cache:
             cache.write(jsonpickle.encode({
-                'expire_at': (self.ttl if ttl is None else ttl) + time.time(),
+                'expire_at': round((self.ttl if ttl is None else ttl) + time.time()),
                 'value': value,
             }))
 
@@ -79,7 +82,7 @@ class FileSystemCacheAdapter(Cache):
         destroy = _delete_file
         if expired_only:
             def _delete_if_expired(file_name: str) -> None:
-                content = _get_file_contents(file_name)
+                content = get_file_contents(file_name)
 
                 if time.time() >= content['expire_at']:
                     _delete_file(file_name)
