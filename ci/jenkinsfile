@@ -2,7 +2,7 @@
 
 library("platform-pipeline-shared-lib")
 
-def image = 'python:3.8-bullseye'
+def image = 'python:3.10-bullseye'
 def workingDir = '.'
 
 def environment = [
