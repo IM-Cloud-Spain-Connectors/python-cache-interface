@@ -14,7 +14,7 @@ def environment = [
     SONAR_FILES_TEST: "tests/",
     SONAR_FILES_EXCLUDED: "",
 
-    CHECKMARX_PROJECT_ID: "python-cache-interface",
+    CHECKMARX_PROJECT_ID: "890d641b-a78a-49f1-97c3-c1fd30187242",
 
     RUN_DEPENDENCY_CHECK: false,
 
