@@ -285,7 +285,9 @@ def pipelineStages = [
                 mkdir cx/scaresolver
                 tar -xzf cx/ScaResolver-linux64.tar.gz --directory cx/scaresolver
 
-                CHECKMARX_PROJECT_NAME=`/cx/checkmarx/cx project list \
+                mv cx /opt/
+
+                CHECKMARX_PROJECT_NAME=`/opt/cx/checkmarx/cx project list \
                     --tenant "ingram-micro" \
                     --client-id "\$CHECKMARX_CLIENT_ID" \
                     --client-secret "\$CHECKMARX_CLIENT_SECRET" \
@@ -295,7 +297,7 @@ def pipelineStages = [
                     --format list | grep "Name" | awk '{print \$3,\$4,\$5}'`
                 
                 
-                cx/checkmarx/cx scan create --file-source '\$WORKSPACE'  --file-filter '!src/test,!target' --agent 'Jenkins' --project-name '\$CHECKMARX_PROJECT_NAME' --branch '\$GIT_BRANCH' --tenant 'ingram-micro' --client-id '\$CHECKMARX_CLIENT_ID' --client-secret '\$CHECKMARX_CLIENT_SECRET' --base-auth-uri 'https://iam.checkmarx.net/' --base-uri 'https://ast.checkmarx.net/' --sca-resolver 'cx/scaresolver/ScaResolver' --sca-resolver-params '--scan-containers' --sast-incremental --scan-types 'sast,sca,iac-security' --async
+                /opt/cx/checkmarx/cx scan create --file-source '\$WORKSPACE'  --file-filter '!src/test,!target' --agent 'Jenkins' --project-name '\$CHECKMARX_PROJECT_NAME' --branch '\$GIT_BRANCH' --tenant 'ingram-micro' --client-id '\$CHECKMARX_CLIENT_ID' --client-secret '\$CHECKMARX_CLIENT_SECRET' --base-auth-uri 'https://iam.checkmarx.net/' --base-uri 'https://ast.checkmarx.net/' --sca-resolver 'cx/scaresolver/ScaResolver' --sca-resolver-params '--scan-containers' --sast-incremental --scan-types 'sast,sca,iac-security' --async
                 """
             }
         }
