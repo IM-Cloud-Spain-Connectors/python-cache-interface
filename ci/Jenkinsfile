@@ -294,6 +294,17 @@ def pipelineStages = [
                     --base-auth-uri "https://iam.checkmarx.net/" \
                     --base-uri "https://ast.checkmarx.net/" \
                     --filter "ids=${env.CHECKMARX_PROJECT_ID}" \
+                    --format list`
+                
+                echo \$CHECKMARX_PROJECT_NAME
+
+                CHECKMARX_PROJECT_NAME=`/opt/cx/checkmarx/cx project list \
+                    --tenant "ingram-micro" \
+                    --client-id "\$CHECKMARX_CLIENT_ID" \
+                    --client-secret "\$CHECKMARX_CLIENT_SECRET" \
+                    --base-auth-uri "https://iam.checkmarx.net/" \
+                    --base-uri "https://ast.checkmarx.net/" \
+                    --filter "ids=${env.CHECKMARX_PROJECT_ID}" \
                     --format list | grep "Name" | awk '{print \$3,\$4,\$5}'`
                 
                 echo \$CHECKMARX_PROJECT_NAME
