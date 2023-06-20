@@ -67,11 +67,13 @@ jobs:
             --base-uri "https://ast.checkmarx.net/" \
             --filter "ids=$CHECKMARX_PROJECT_ID" \
             --format list | grep "Name" | awk '{$1=$2=""; print $0}' | xargs`
+          
+          echo "Project name: $CHECKMARX_PROJECT_NAME"
 
           /opt/cx/checkmarx/cx scan create --file-source "${GITHUB_WORKSPACE}" \
             --file-filter '!src/test,!target' \
-            --agent 'GitHub' \
-            --project-name "$CHECKMARX_PROJECT_NAME" \
+            --agent 'Github' \
+            --project-name $CHECKMARX_PROJECT_NAME \
             --branch ${GITHUB_REF##*/} \
             --tenant 'ingram-micro' \
             --client-id ${{ secrets.CX_CLIENT_ID }} \
