@@ -271,7 +271,7 @@ def pipelineStages = [
         """
     }],
     [name: 'Scan Checkmarx', steps: {
-        withCredentials([usernamePassword(credentialsId: 'CHECKMARX_CREDENTIALS', passwordVariable: 'CHECKMARX_CLIENT_SECRET', usernameVariable: 'CHECKMARX_CLIENT_ID')]) {
+        withCredentials([usernamePassword(credentialsId: 'checkmarx', passwordVariable: 'CHECKMARX_CLIENT_SECRET', usernameVariable: 'CHECKMARX_CLIENT_ID')]) {
 
             script{
                 sh """#!/bin/bash
