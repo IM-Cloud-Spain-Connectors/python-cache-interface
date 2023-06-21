@@ -48,16 +48,19 @@ jobs:
         run: poetry run pytest
 
       - name: Checkmarx scan
-        with:
+        env:
           CX_CLIENT_ID: ${{ secrets.CX_CLIENT_ID }}
           CX_CLIENT_SECRET: ${{ secrets.CX_CLIENT_SECRET }}
+          SECRET_TEST: ${{ secrets.SECRET_TEST }}
         run: |
           echo ${#CHECKMARX_PROJECT_ID}
           echo ${#CX_CLIENT_ID}
           echo ${#CX_CLIENT_SECRET}
+          echo ${#SECRET_TEST}
 
           echo ${#${{ secrets.CX_CLIENT_ID }}}
           echo ${#${{ secrets.CX_CLIENT_SECRET }}}
+          echo ${#${{ secrets.SECRET_TEST }}}
 
           mkdir cx
           wget -q 'https://download.checkmarx.com/CxOne/CLI/latest/ast-cli_linux_x64.tar.gz' -P cx
