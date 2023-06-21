@@ -58,14 +58,18 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Install Dependencies
+        run: |
+          pip install poetry
+          poetry check
+          poetry install
+
       - name: Checkmarx scan
         env:
           CHECKMARX_PROJECT_ID: "890d641b-a78a-49f1-97c3-c1fd30187242"
           CX_CLIENT_ID: ${{ secrets.CX_CLIENT_ID }}
           CX_CLIENT_SECRET: ${{ secrets.CX_CLIENT_SECRET }}
         run: |
-          pip install poetry
-
           mkdir cx
           wget -q 'https://download.checkmarx.com/CxOne/CLI/latest/ast-cli_linux_x64.tar.gz' -P cx
           mkdir cx/checkmarx
