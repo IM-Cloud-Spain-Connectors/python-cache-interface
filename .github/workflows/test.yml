@@ -61,6 +61,7 @@ jobs:
           tar -xzf cx/ScaResolver-linux64.tar.gz --directory cx/scaresolver
 
           mv cx /opt/
+          ls -l /opt/
 
           CHECKMARX_PROJECT_NAME=`/opt/cx/checkmarx/cx project list \
             --tenant "ingram-micro" \
@@ -73,6 +74,10 @@ jobs:
           
           echo "Project name: $CHECKMARX_PROJECT_NAME"
           echo "---------------------"
+          echo "${GITHUB_WORKSPACE}"
+          echo "${GITHUB_REF##*/}"
+          
+
 
           /opt/cx/checkmarx/cx scan create --file-source "${GITHUB_WORKSPACE}" \
             --file-filter '!src/test,!target' \
