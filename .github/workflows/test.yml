@@ -48,7 +48,7 @@ jobs:
         run: poetry run pytest
 
       - name: Checkmarx scan
-        env:
+        with:
           CX_CLIENT_ID: ${{ secrets.CX_CLIENT_ID }}
           CX_CLIENT_SECRET: ${{ secrets.CX_CLIENT_SECRET }}
         run: |
