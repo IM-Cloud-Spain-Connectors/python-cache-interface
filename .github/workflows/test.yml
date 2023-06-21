@@ -51,6 +51,7 @@ jobs:
 
       - name: Checkmarx scan
         run: |
+          echo ${#CHECKMARX_PROJECT_ID}
           echo ${#CX_CLIENT_ID}
           echo ${#CX_CLIENT_SECRET}
 
