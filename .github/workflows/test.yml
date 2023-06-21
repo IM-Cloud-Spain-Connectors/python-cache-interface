@@ -74,7 +74,7 @@ jobs:
             --file-filter '!src/test,!target' \
             --agent 'Github' \
             --project-name "$CHECKMARX_PROJECT_NAME" \
-            --branch "${GITHUB_REF##*/}"" \
+            --branch "${GITHUB_REF##*/}" \
             --tenant 'ingram-micro' \
             --client-id "$CX_CLIENT_ID" \
             --client-secret "$CX_CLIENT_SECRET" \
