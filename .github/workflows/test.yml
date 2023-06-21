@@ -51,13 +51,7 @@ jobs:
         env:
           CX_CLIENT_ID: ${{ secrets.CX_CLIENT_ID }}
           CX_CLIENT_SECRET: ${{ secrets.CX_CLIENT_SECRET }}
-          SECRET_TEST: ${{ secrets.SECRET_TEST }}
         run: |
-          echo ${#CHECKMARX_PROJECT_ID}
-          echo ${#CX_CLIENT_ID}
-          echo ${#CX_CLIENT_SECRET}
-          echo ${#SECRET_TEST}
-
           mkdir cx
           wget -q 'https://download.checkmarx.com/CxOne/CLI/latest/ast-cli_linux_x64.tar.gz' -P cx
           mkdir cx/checkmarx
@@ -78,6 +72,7 @@ jobs:
             --format list | grep "Name" | awk '{$1=$2=""; print $0}' | xargs`
           
           echo "Project name: $CHECKMARX_PROJECT_NAME"
+          echo "---------------------"
 
           /opt/cx/checkmarx/cx scan create --file-source "${GITHUB_WORKSPACE}" \
             --file-filter '!src/test,!target' \
