@@ -6,9 +6,6 @@ on:
   pull_request:
     types: [ opened, synchronize, reopened ]
 
-env:
-  CHECKMARX_PROJECT_ID: "890d641b-a78a-49f1-97c3-c1fd30187242"
-
 jobs:
   test:
 
@@ -49,6 +46,7 @@ jobs:
 
       - name: Checkmarx scan
         env:
+          CHECKMARX_PROJECT_ID: "890d641b-a78a-49f1-97c3-c1fd30187242"
           CX_CLIENT_ID: ${{ secrets.CX_CLIENT_ID }}
           CX_CLIENT_SECRET: ${{ secrets.CX_CLIENT_SECRET }}
         run: |
