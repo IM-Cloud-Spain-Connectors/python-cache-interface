@@ -8,8 +8,6 @@ on:
 
 env:
   CHECKMARX_PROJECT_ID: "890d641b-a78a-49f1-97c3-c1fd30187242"
-  CX_CLIENT_ID: ${{ secrets.CX_CLIENT_ID }}
-  CX_CLIENT_SECRET: ${{ secrets.CX_CLIENT_SECRET }}
 
 jobs:
   test:
@@ -50,6 +48,9 @@ jobs:
         run: poetry run pytest
 
       - name: Checkmarx scan
+        env:
+          CX_CLIENT_ID: ${{ secrets.CX_CLIENT_ID }}
+          CX_CLIENT_SECRET: ${{ secrets.CX_CLIENT_SECRET }}
         run: |
           echo ${#CHECKMARX_PROJECT_ID}
           echo ${#CX_CLIENT_ID}
