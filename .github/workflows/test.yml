@@ -8,6 +8,8 @@ on:
 
 env:
   CHECKMARX_PROJECT_ID: "890d641b-a78a-49f1-97c3-c1fd30187242"
+  CX_CLIENT_ID: ${{ secrets.CX_CLIENT_ID }}
+  CX_CLIENT_SECRET: ${{ secrets.CX_CLIENT_SECRET }}
 
 jobs:
   test:
@@ -61,8 +63,8 @@ jobs:
 
           CHECKMARX_PROJECT_NAME=`/opt/cx/checkmarx/cx project list \
             --tenant "ingram-micro" \
-            --client-id ${{ secrets.CX_CLIENT_ID }} \
-            --client-secret ${{ secrets.CX_CLIENT_SECRET }} \
+            --client-id $CX_CLIENT_ID \
+            --client-secret $CX_CLIENT_SECRET \
             --base-auth-uri "https://iam.checkmarx.net/" \
             --base-uri "https://ast.checkmarx.net/" \
             --filter "ids=$CHECKMARX_PROJECT_ID" \
@@ -76,8 +78,8 @@ jobs:
             --project-name $CHECKMARX_PROJECT_NAME \
             --branch ${GITHUB_REF##*/} \
             --tenant 'ingram-micro' \
-            --client-id ${{ secrets.CX_CLIENT_ID }} \
-            --client-secret ${{ secrets.CX_CLIENT_SECRET }} \
+            --client-id $CX_CLIENT_ID \
+            --client-secret $CX_CLIENT_SECRET \
             --base-auth-uri 'https://iam.checkmarx.net/' \
             --base-uri 'https://ast.checkmarx.net/' \
             --sca-resolver '/opt/cx/scaresolver/ScaResolver' \
