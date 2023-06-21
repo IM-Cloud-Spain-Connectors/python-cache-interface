@@ -21,12 +21,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Download SCA Resolver
-        run: |
-          wget https://sca-downloads.s3.amazonaws.com/cli/latest/ScaResolver-linux64.tar.gz
-          tar -xzvf ScaResolver-linux64.tar.gz
-          rm -rf ScaResolver-linux64.tar.gz
-
       - name: Environment Setup (Python ${{ matrix.python-version }})
         uses: actions/setup-python@v4
         with:
@@ -43,6 +37,38 @@ jobs:
 
       - name: Test Execution
         run: poetry run pytest
+
+  checkmarx:
+    needs: test
+    
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: [ '3.11' ]
+
+    steps:
+      - name: Source Code Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Environment Setup (Python ${{ matrix.python-version }})
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Dependencies
+        run: |
+          pip install poetry
+          poetry check
+          poetry install
+
+      - name: Download SCA Resolver
+        run: |
+          wget https://sca-downloads.s3.amazonaws.com/cli/latest/ScaResolver-linux64.tar.gz
+          tar -xzvf ScaResolver-linux64.tar.gz
+          rm -rf ScaResolver-linux64.tar.gz
 
       - name: Checkmarx scan
         env:
