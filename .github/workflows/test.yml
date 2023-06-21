@@ -59,34 +59,7 @@ jobs:
           wget -q 'https://sca-downloads.s3.amazonaws.com/cli/latest/ScaResolver-linux64.tar.gz' -P cx
           mkdir cx/scaresolver
           tar -xzf cx/ScaResolver-linux64.tar.gz --directory cx/scaresolver
-
           mv cx /opt/
-
-          echo $CHECKMARX_PROJECT_ID
-          CHECKMARX_PROJECT_NAME=`/opt/cx/checkmarx/cx project list \
-            --tenant "ingram-micro" \
-            --client-id "$CX_CLIENT_ID" \
-            --client-secret "$CX_CLIENT_SECRET" \
-            --base-auth-uri "https://iam.checkmarx.net/" \
-            --base-uri "https://ast.checkmarx.net/" \
-            --filter "ids=$CHECKMARX_PROJECT_ID" \
-            --format list`
-          echo "Project name0: $CHECKMARX_PROJECT_NAME"
-
-          echo "**************************"
-
-          /opt/cx/checkmarx/cx project list \
-            --tenant "ingram-micro" \
-            --client-id "$CX_CLIENT_ID" \
-            --client-secret "$CX_CLIENT_SECRET" \
-            --base-auth-uri "https://iam.checkmarx.net/" \
-            --base-uri "https://ast.checkmarx.net/" \
-            --filter "ids=$CHECKMARX_PROJECT_ID" \
-            --format list
-
-          echo "--------------------------"
-
-
 
           CHECKMARX_PROJECT_NAME=`/opt/cx/checkmarx/cx project list \
             --tenant "ingram-micro" \
@@ -97,21 +70,14 @@ jobs:
             --filter "ids=$CHECKMARX_PROJECT_ID" \
             --format list | grep "Name" | awk '{$1=$2=""; print $0}' | xargs`
 
-          echo "Project name: $CHECKMARX_PROJECT_NAME"
-          echo "---------------------"
-          echo "${GITHUB_WORKSPACE}"
-          echo "${GITHUB_REF##*/}"
-
-
-
           /opt/cx/checkmarx/cx scan create --file-source "${GITHUB_WORKSPACE}" \
             --file-filter '!src/test,!target' \
             --agent 'Github' \
-            --project-name $CHECKMARX_PROJECT_NAME \
-            --branch ${GITHUB_REF##*/} \
+            --project-name "$CHECKMARX_PROJECT_NAME" \
+            --branch "${GITHUB_REF##*/}"" \
             --tenant 'ingram-micro' \
-            --client-id $CX_CLIENT_ID \
-            --client-secret $CX_CLIENT_SECRET \
+            --client-id "$CX_CLIENT_ID" \
+            --client-secret "$CX_CLIENT_SECRET" \
             --base-auth-uri 'https://iam.checkmarx.net/' \
             --base-uri 'https://ast.checkmarx.net/' \
             --sca-resolver '/opt/cx/scaresolver/ScaResolver' \
