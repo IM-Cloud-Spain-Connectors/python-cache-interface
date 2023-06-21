@@ -63,7 +63,7 @@ jobs:
           mv cx /opt/
           ls -l /opt/
 
-
+          echo $CHECKMARX_PROJECT_ID
           CHECKMARX_PROJECT_NAME=`/opt/cx/checkmarx/cx project list \
             --tenant "ingram-micro" \
             --client-id $CX_CLIENT_ID \
@@ -73,6 +73,17 @@ jobs:
             --filter "ids=$CHECKMARX_PROJECT_ID" \
             --format list`
           echo "Project name0: $CHECKMARX_PROJECT_NAME"
+
+          /opt/cx/checkmarx/cx project list \
+            --tenant "ingram-micro" \
+            --client-id $CX_CLIENT_ID \
+            --client-secret $CX_CLIENT_SECRET \
+            --base-auth-uri "https://iam.checkmarx.net/" \
+            --base-uri "https://ast.checkmarx.net/" \
+            --filter "ids=$CHECKMARX_PROJECT_ID" \
+            --format list
+
+          echo "--------------------------"
 
 
 
